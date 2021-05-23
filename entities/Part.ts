@@ -1,7 +1,10 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, Tree, TreeChildren, TreeParent, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne, Tree, TreeChildren, TreeParent, ManyToMany, JoinTable } from "typeorm";
 import { Color } from "./Color";
+import { GrainType } from "./GrainType";
 import { Material } from "./Material";
-import { Process } from "./Process";
+import { MouldCav } from "./MouldCav";
+import { MouldMaker } from "./MouldMaker";
+import { MouldTon } from "./MouldTon";
 import { Project } from "./Project";
 import { Sourcing } from "./Sourcing";
 
@@ -55,7 +58,19 @@ export class Part {
     // many to one
     @ManyToOne(() => Material, material => material.parts)
     material?: Material;
+
+    @ManyToOne(() => GrainType, grain => grain.parts)
+    grainType?: GrainType;
+
+    @ManyToOne(() => MouldMaker, mouldMaker => mouldMaker.parts)
+    mouldMaker?: MouldMaker;
+
+    @ManyToOne(() => MouldTon, mouldTon => mouldTon.parts)
+    mouldTon?: MouldTon;
     
+    @ManyToOne(() => MouldCav, mouldCav => mouldCav.parts)
+    mouldCav?: MouldCav;
+
     // Closure
     @TreeChildren()
     children?: Part[];
