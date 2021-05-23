@@ -50,12 +50,6 @@ export class Part {
     })
     colors?: Color[];
 
-    @ManyToMany(() => Sourcing)
-    @JoinTable({
-        name: "part_sourcing"
-    })
-    sourcings?: Sourcing[];
-
     // many to one
     @ManyToOne(() => Material, material => material.parts)
     material?: Material;

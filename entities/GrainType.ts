@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { Part } from "./Part";
 
 @Entity()
 export class GrainType {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     code!: string;
 
     @OneToMany(() => Part, part => part.grainType)

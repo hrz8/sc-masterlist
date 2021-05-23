@@ -9,8 +9,10 @@ createConnection({
     password: process.env.MYSQL_PASSWORD,
     database: "sc-masterlist",
     entities: [`${__dirname}/entities/*.js`],
+    migrations: [`${__dirname}/migrations/*.js`],
     synchronize: true,
+    migrationsRun: true,
     logging: true
 }).then((connection: any) => {
-    // here you can start to work with your entities
+    process.exit(0)
 }).catch((error: any) => console.log(error));

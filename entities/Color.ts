@@ -6,11 +6,11 @@ export class Color {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
-    name!: string;
-
     @Column({ nullable: true })
-    code?: string;
+    name?: string;
+
+    @Column()
+    code!: string;
 
     @Column({ nullable: true })
     sfx?: string;
