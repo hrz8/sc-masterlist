@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, Tree, TreeChildren, TreeParent, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Color } from "./Color";
 import { Process } from "./Process";
 import { Project } from "./Project";
+import { Sourcing } from "./Sourcing";
 
 @Entity()
 @Tree("closure-table", {
@@ -25,13 +27,26 @@ export class Part {
     image!: string;
 
     @Column()
-    qty_per_unit!: number;
+    qtyPerUnit!: number;
 
     @Column()
-    qty_per_month!: number;
+    qtyPerMonth!: number;
 
+    @Column()
+    dqgWeight?: number;
+
+    // project relation
     @ManyToOne(() => Project, project => project.parts)
     project!: Project;
+
+    // many to many
+    @ManyToMany(() => Color)
+    @JoinTable()
+    colors?: Color[];
+
+    @ManyToMany(() => Sourcing)
+    @JoinTable()
+    sourcings?: Sourcing[];
     
     // Closure
     @TreeChildren()

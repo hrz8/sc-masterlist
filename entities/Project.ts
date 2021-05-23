@@ -10,8 +10,8 @@ export class Project {
     @Column()
     name!: string;
 
-    @Column("text")
-    description!: string;
+    @Column("text", { nullable: true })
+    description?: string;
 
     @OneToMany(() => Part, part => part.project)
     parts?: Part[];

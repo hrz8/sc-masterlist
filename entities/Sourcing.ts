@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Process {
+export class Sourcing {
 
     @PrimaryGeneratedColumn()
     id!: number;
@@ -9,6 +9,6 @@ export class Process {
     @Column()
     name!: string;
 
-    @Column("text", { nullable: true })
+    @Column("text",  { nullable: true })
     description?: string;
 }
