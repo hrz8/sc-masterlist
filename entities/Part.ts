@@ -39,6 +39,15 @@ export class Part {
     @Column()
     dwgWeight?: number;
 
+    @Column({ nullable: true })
+    paintColor?: string;
+
+    @Column({ nullable: true })
+    paintCode?: string;
+
+    @Column("text")
+    remarks?: string;
+
     // project relation
     @ManyToOne(() => Project, project => project.parts)
     project!: Project;

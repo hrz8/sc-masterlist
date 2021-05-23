@@ -1,17 +1,17 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Part } from "./Part";
+import { Material } from "./Material";
 
 @Entity()
-export class MouldTon {
+export class MaterialMaker {
 
     @PrimaryGeneratedColumn()
     id!: number;
 
     @Column()
-    value!: number;
+    name!: string;
 
-    @OneToMany(() => Part, part => part.mouldTon)
-    parts?: Part[];
+    @OneToMany(() => Material, material => material.maker)
+    materials?: Material[];
 
     @Column("text",  { nullable: true })
     description?: string;

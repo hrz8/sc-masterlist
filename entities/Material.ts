@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
+import { MaterialMaker } from "./MaterialMaker";
 import { Part } from "./Part";
 
 @Entity()
@@ -13,8 +14,8 @@ export class Material {
     @Column()
     grade!: string;
 
-    @Column()
-    maker!: string;
+    @ManyToOne(() => MaterialMaker, maker => maker.materials)
+    maker?: MaterialMaker;
 
     @OneToMany(() => Part, part => part.material)
     parts?: Part[];
