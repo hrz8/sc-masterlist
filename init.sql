@@ -1,3 +1,4 @@
+-- docker exec mysql-container /usr/bin/mysqldump -u root --password=password sc-masterlist > backup.sql
 -- MySQL dump 10.13  Distrib 8.0.25, for Linux (x86_64)
 --
 -- Host: localhost    Database: sc-masterlist
