@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { Material } from "./Material";
 
 @Entity()
-export class MaterialMaker {
+export class MaterialGrade {
     @PrimaryColumn()
-    name!: string;
+    code!: string;
 
     @OneToMany(() => Material, material => material.maker)
     materials?: Material[];
