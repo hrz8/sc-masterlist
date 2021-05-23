@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/hrz8/sc-masterlist#readme",
   "dependencies": {
+    "mysql2": "^2.2.5",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.32"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0"
   }
 }
