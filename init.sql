@@ -279,15 +279,17 @@ DROP TABLE IF EXISTS `part`;
 CREATE TABLE `part` (
   `number` varchar(100) NOT NULL,
   `level` int NOT NULL,
-  `name` int NOT NULL,
+  `name` varchar(255) NOT NULL,
   `image` text NOT NULL,
-  `qtyPerUnit` int NOT NULL,
-  `qtyPerMonth` int NOT NULL,
-  `dwgWeight` int NOT NULL,
+  `qtyPerUnit` int DEFAULT NULL,
+  `qtyPerMonth` int DEFAULT NULL,
+  `dwgWeight` int DEFAULT NULL,
   `paintColor` varchar(255) DEFAULT NULL,
   `paintCode` varchar(255) DEFAULT NULL,
-  `remarks` text NOT NULL,
-  `projectId` int DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `sourcingRemarks` varchar(255) DEFAULT NULL,
+  `processRouting` varchar(255) DEFAULT NULL,
+  `projectName` varchar(255) DEFAULT NULL,
   `materialId` int DEFAULT NULL,
   `grainTypeCode` varchar(255) DEFAULT NULL,
   `mouldMakerId` int DEFAULT NULL,
@@ -296,7 +298,7 @@ CREATE TABLE `part` (
   `actualWeightId` int DEFAULT NULL,
   `parentNumber` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`number`),
-  KEY `FK_b9cb06863ceba6fca4167152081` (`projectId`),
+  KEY `FK_593b8516ef9fbcf79a5e966562b` (`projectName`),
   KEY `FK_9ad939eab558d2982213f2abd31` (`materialId`),
   KEY `FK_33fbb2da169e8c882066b5a39c7` (`grainTypeCode`),
   KEY `FK_508c3ef1ece31e2f2e863734810` (`mouldMakerId`),
@@ -306,9 +308,9 @@ CREATE TABLE `part` (
   KEY `FK_c0dbd0caa64157c4ef12171323b` (`parentNumber`),
   CONSTRAINT `FK_33fbb2da169e8c882066b5a39c7` FOREIGN KEY (`grainTypeCode`) REFERENCES `grain_type` (`code`),
   CONSTRAINT `FK_508c3ef1ece31e2f2e863734810` FOREIGN KEY (`mouldMakerId`) REFERENCES `mould_maker` (`id`),
+  CONSTRAINT `FK_593b8516ef9fbcf79a5e966562b` FOREIGN KEY (`projectName`) REFERENCES `project` (`name`),
   CONSTRAINT `FK_5b8d686a671eef6579f9c230938` FOREIGN KEY (`actualWeightId`) REFERENCES `actual_weight` (`id`),
   CONSTRAINT `FK_9ad939eab558d2982213f2abd31` FOREIGN KEY (`materialId`) REFERENCES `material` (`id`),
-  CONSTRAINT `FK_b9cb06863ceba6fca4167152081` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`),
   CONSTRAINT `FK_c0dbd0caa64157c4ef12171323b` FOREIGN KEY (`parentNumber`) REFERENCES `part` (`number`),
   CONSTRAINT `FK_ea9efc5003b26dd0010fc1ff96b` FOREIGN KEY (`mouldTonId`) REFERENCES `mould_ton` (`id`),
   CONSTRAINT `FK_f32254c0ad54abc51ecdaf8afce` FOREIGN KEY (`mouldCavId`) REFERENCES `mould_cav` (`id`)
@@ -321,6 +323,7 @@ CREATE TABLE `part` (
 
 LOCK TABLES `part` WRITE;
 /*!40000 ALTER TABLE `part` DISABLE KEYS */;
+INSERT INTO `part` VALUES ('52101-BZC10',1,'BUMPER, SUB-ASSY, FR (D-BRAND LO : W/SONAR, W/O FOG, W/O CAMERA)','https://picsum.photos/seed/picsum/200/300',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'D26A',NULL,NULL,NULL,NULL,NULL,NULL,NULL),('52119-BZR70',2,'COVER, FR BUMPER (D-BRAND)','https://picsum.photos/id/237/200/300',1,NULL,4831,'BODY COLOR','11BK01',NULL,NULL,NULL,'D26A',7,'GR504',1,8,1,NULL,'52101-BZC10'),('53111-BZ580',2,'GRILLE, RADIATOR (D-BRAND)','https://picsum.photos/200/300.jpg',2,1,292,'BLACK',NULL,NULL,'SC','RPT -> SC','D26A',17,'GR504',6,3,1,NULL,'52101-BZC10');
 /*!40000 ALTER TABLE `part` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,6 +351,7 @@ CREATE TABLE `part_closure` (
 
 LOCK TABLES `part_closure` WRITE;
 /*!40000 ALTER TABLE `part_closure` DISABLE KEYS */;
+INSERT INTO `part_closure` VALUES ('52101-BZC10','52101-BZC10'),('52101-BZC10','52119-BZR70'),('52101-BZC10','53111-BZ580'),('52119-BZR70','52119-BZR70'),('53111-BZ580','53111-BZ580');
 /*!40000 ALTER TABLE `part_closure` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,6 +379,7 @@ CREATE TABLE `part_color` (
 
 LOCK TABLES `part_color` WRITE;
 /*!40000 ALTER TABLE `part_color` DISABLE KEYS */;
+INSERT INTO `part_color` VALUES ('52119-BZR70',14),('53111-BZ580',14);
 /*!40000 ALTER TABLE `part_color` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,13 +391,13 @@ DROP TABLE IF EXISTS `part_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `part_process` (
-  `partNumber` varchar(255) NOT NULL,
-  `processId` int NOT NULL,
-  `routing` varchar(255) NOT NULL,
-  PRIMARY KEY (`partNumber`,`processId`),
-  KEY `FK_1f242a3b204292c862c57408113` (`processId`),
-  CONSTRAINT `FK_1f242a3b204292c862c57408113` FOREIGN KEY (`processId`) REFERENCES `process` (`id`),
-  CONSTRAINT `FK_bc0946848c67b044f5c2867f30d` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`)
+  `partNumber` varchar(100) NOT NULL,
+  `processName` varchar(255) NOT NULL,
+  PRIMARY KEY (`partNumber`,`processName`),
+  KEY `IDX_bc0946848c67b044f5c2867f30` (`partNumber`),
+  KEY `IDX_779ae4a3d49daf3c2e2bcc277d` (`processName`),
+  CONSTRAINT `FK_779ae4a3d49daf3c2e2bcc277dc` FOREIGN KEY (`processName`) REFERENCES `process` (`name`) ON DELETE CASCADE,
+  CONSTRAINT `FK_bc0946848c67b044f5c2867f30d` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -402,6 +407,7 @@ CREATE TABLE `part_process` (
 
 LOCK TABLES `part_process` WRITE;
 /*!40000 ALTER TABLE `part_process` DISABLE KEYS */;
+INSERT INTO `part_process` VALUES ('52119-BZR70','RESIN'),('53111-BZ580','ASSY');
 /*!40000 ALTER TABLE `part_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,13 +419,13 @@ DROP TABLE IF EXISTS `part_sourcing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `part_sourcing` (
-  `partNumber` varchar(255) NOT NULL,
-  `sourcingId` int NOT NULL,
-  `remarks` varchar(255) NOT NULL,
-  PRIMARY KEY (`partNumber`,`sourcingId`),
-  KEY `FK_00148a090b5c04ee2773936bcd3` (`sourcingId`),
-  CONSTRAINT `FK_00148a090b5c04ee2773936bcd3` FOREIGN KEY (`sourcingId`) REFERENCES `sourcing` (`id`),
-  CONSTRAINT `FK_97a30e04c91c612bd1bf2163af0` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`)
+  `partNumber` varchar(100) NOT NULL,
+  `sourcingName` varchar(255) NOT NULL,
+  PRIMARY KEY (`partNumber`,`sourcingName`),
+  KEY `IDX_97a30e04c91c612bd1bf2163af` (`partNumber`),
+  KEY `IDX_fd4e0631c1e47aae9d37dd93a2` (`sourcingName`),
+  CONSTRAINT `FK_97a30e04c91c612bd1bf2163af0` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`) ON DELETE CASCADE,
+  CONSTRAINT `FK_fd4e0631c1e47aae9d37dd93a2f` FOREIGN KEY (`sourcingName`) REFERENCES `sourcing` (`name`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -429,6 +435,7 @@ CREATE TABLE `part_sourcing` (
 
 LOCK TABLES `part_sourcing` WRITE;
 /*!40000 ALTER TABLE `part_sourcing` DISABLE KEYS */;
+INSERT INTO `part_sourcing` VALUES ('52119-BZR70','SUGITY'),('52119-BZR70','V-V'),('53111-BZ580','RPT');
 /*!40000 ALTER TABLE `part_sourcing` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,11 +447,10 @@ DROP TABLE IF EXISTS `process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `process` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +459,7 @@ CREATE TABLE `process` (
 
 LOCK TABLES `process` WRITE;
 /*!40000 ALTER TABLE `process` DISABLE KEYS */;
-INSERT INTO `process` VALUES (1,'RESIN',NULL),(2,'PLATING',NULL),(3,'PAINT',NULL),(4,'EXTRUSION',NULL),(5,'CUTTING',NULL),(6,'GRAIN',NULL),(7,'ASSY',NULL);
+INSERT INTO `process` VALUES ('ASSY',NULL),('CUTTING',NULL),('EXTRUSION',NULL),('GRAIN',NULL),('PAINT',NULL),('PLATING',NULL),('RESIN',NULL);
 /*!40000 ALTER TABLE `process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -465,11 +471,10 @@ DROP TABLE IF EXISTS `project`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,7 +483,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (1,'D26A',NULL),(2,'560B',NULL);
+INSERT INTO `project` VALUES ('560B',NULL),('D26A',NULL);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,11 +495,10 @@ DROP TABLE IF EXISTS `sourcing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sourcing` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -503,7 +507,7 @@ CREATE TABLE `sourcing` (
 
 LOCK TABLES `sourcing` WRITE;
 /*!40000 ALTER TABLE `sourcing` DISABLE KEYS */;
-INSERT INTO `sourcing` VALUES (1,'SUGITY',NULL),(2,'RPT',NULL),(3,'TTEC',NULL),(4,'KTI',NULL),(5,'OTHERS',NULL),(6,'CKD',NULL),(7,'V-V',NULL);
+INSERT INTO `sourcing` VALUES ('CKD',NULL),('KTI',NULL),('OTHERS',NULL),('RPT',NULL),('SUGITY',NULL),('TTEC',NULL),('V-V',NULL);
 /*!40000 ALTER TABLE `sourcing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -516,4 +520,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-23  8:03:41
+-- Dump completed on 2021-05-23  9:15:00
