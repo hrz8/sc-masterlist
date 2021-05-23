@@ -1,11 +1,19 @@
-import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne, Tree, TreeChildren, TreeParent, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Process } from "./Process";
 import { Project } from "./Project";
 
 @Entity()
+@Tree("closure-table", {
+    closureTableName: "part_relation",
+    ancestorColumnName: (column) => "parent_" + column.propertyName,
+    descendantColumnName: (column) => "sub_" + column.propertyName,
+})
 export class Part {
 
-    @PrimaryColumn()
-    number!: number;
+    @PrimaryColumn({
+        length: 100
+    })
+    number!: string;
 
     @Column()
     level!: number;
@@ -24,4 +32,12 @@ export class Part {
 
     @ManyToOne(() => Project, project => project.parts)
     project!: Project;
+    
+    // Closure
+    @TreeChildren()
+    children?: Part[];
+
+    @TreeParent()
+    parent!: Part;
+
 }

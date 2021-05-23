@@ -1,7 +1,5 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { Part } from "./entities/Part";
-import { Project } from "./entities/Project";
 
 createConnection({
     type: "mysql",
@@ -10,10 +8,7 @@ createConnection({
     username: "root",
     password: process.env.MYSQL_PASSWORD,
     database: "sc-masterlist",
-    entities: [
-        Project,
-        Part
-    ],
+    entities: [`${__dirname}/entities/*.js`],
     synchronize: true,
     logging: true
 }).then((connection: any) => {
