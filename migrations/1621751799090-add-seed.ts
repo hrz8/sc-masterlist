@@ -7,6 +7,7 @@ import { MaterialMaker } from "../entities/MaterialMaker";
 import { MouldCav } from "../entities/MouldCav";
 import { MouldMaker } from "../entities/MouldMaker";
 import { MouldTon } from "../entities/MouldTon";
+import { Part } from "../entities/Part";
 import { Process } from "../entities/Process";
 import { Project } from "../entities/Project";
 import { Sourcing } from "../entities/Sourcing";
@@ -18,6 +19,7 @@ import materialMaker from "../seeds/materialMaker";
 import mouldCav from "../seeds/mouldCav";
 import mouldMaker from "../seeds/mouldMaker";
 import mouldTon from "../seeds/mouldTon";
+import part from "../seeds/part";
 import process from "../seeds/process";
 import sourcing from "../seeds/sourcing";
 
@@ -43,6 +45,7 @@ export class addSeed1621751799090 implements MigrationInterface {
             ]
         )
         await getRepository(Material).save(material)
+        await getRepository(Part).save(part)
         
     }
 

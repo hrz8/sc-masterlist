@@ -1,13 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { Part } from "./Part";
 
 @Entity()
 export class Project {
 
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @Column()
+    @PrimaryColumn()
     name!: string;
 
     @Column("text", { nullable: true })

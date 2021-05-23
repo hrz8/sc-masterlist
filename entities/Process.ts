@@ -1,12 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Process {
 
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @Column()
+    @PrimaryColumn()
     name!: string;
 
     @Column("text", { nullable: true })

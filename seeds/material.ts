@@ -2,6 +2,7 @@ import { Material } from "../entities/Material";
 
 export default [
     {
+        id: 1,
         tsm: "5608G-1",
         grade: {
             code: "X660T"
@@ -11,6 +12,7 @@ export default [
         }
     },
     {
+        id: 2,
         tsm: "5608G-5AL",
         grade: {
             code: "LA880T"
@@ -20,6 +22,7 @@ export default [
         }
     },
     {
+        id: 3,
         tsm: "5608G-5A",
         grade: {
             code: "LA880T"
@@ -29,6 +32,7 @@ export default [
         }
     },
     {
+        id: 4,
         tsm: "5608G-5ALS",
         grade: {
             code: "LA880T"
@@ -38,6 +42,7 @@ export default [
         }
     },
     {
+        id: 5,
         tsm: "5608G-5BL",
         grade: {
             code: "BR5B1"
@@ -47,6 +52,7 @@ export default [
         }
     },
     {
+        id: 6,
         tsm: "5608G-5BLS",
         grade: {
             code: "BR5B1"
@@ -56,6 +62,7 @@ export default [
         }
     },
     {
+        id: 7,
         tsm: "5608G-7",
         grade: {
             code: "TSOP-7"
@@ -65,6 +72,7 @@ export default [
         }
     },
     {
+        id: 8,
         tsm: "5514G-2L",
         grade: {
             code: "(PP) AZ564GL"
@@ -74,6 +82,7 @@ export default [
         }
     },
     {
+        id: 9,
         tsm: "5514G-3AL",
         grade: {
             code: "(PP) CPS188"
@@ -83,6 +92,7 @@ export default [
         }
     },
     {
+        id: 10,
         tsm: "5514G-3BL",
         grade: {
             code: "(PP) AZ864E4"
@@ -92,6 +102,7 @@ export default [
         }
     },
     {
+        id: 11,
         tsm: "5514G-3BLS",
         grade: {
             code: "(PP) AZ864E4"
@@ -101,6 +112,7 @@ export default [
         }
     },
     {
+        id: 12,
         tsm: "5512G-2A",
         grade: {
             code: "(ABS) 100-X01"
@@ -110,6 +122,7 @@ export default [
         }
     },
     {
+        id: 13,
         tsm: "5512G-2C",
         grade: {
             code: "(ABS) 450Y-MH5"
@@ -119,6 +132,7 @@ export default [
         }
     },
     {
+        id: 14,
         tsm: "5512G-3A",
         grade: {
             code: "(ABS) 100-X01"
@@ -128,6 +142,7 @@ export default [
         }
     },
     {
+        id: 15,
         tsm: "5512G-3",
         grade: {
             code: "(ABS) 100-MPF"
@@ -137,6 +152,7 @@ export default [
         }
     },
     {
+        id: 16,
         tsm: "5512G-4A",
         grade: {
             code: "(ABS) 325"
@@ -146,6 +162,7 @@ export default [
         }
     },
     {
+        id: 17,
         tsm: "5512G-4B",
         grade: {
             code: "(ABS) 325"
@@ -155,6 +172,7 @@ export default [
         }
     },
     {
+        id: 18,
         tsm: "5523G-2",
         grade: {
             code: "(ASA) W211"
@@ -164,12 +182,14 @@ export default [
         }
     },
     {
+        id: 19,
         tsm: "5523G-1W",
         grade: {
             code: "ASA"
         }
     },
     {
+        id: 20,
         tsm: "5526G-1",
         grade: {
             code: "PC/ABS"
@@ -179,6 +199,7 @@ export default [
         }
     },
     {
+        id: 21,
         tsm: "5514-2",
         grade: {
             code: "(PP) AW563"
@@ -188,6 +209,7 @@ export default [
         }
     },
     {
+        id: 22,
         tsm: "5514G-2",
         grade: {
             code: "(PP) AW563"
@@ -197,6 +219,7 @@ export default [
         }
     },
     {
+        id: 23,
         tsm: "5514-2B",
         grade: {
             code: "(PP) AW564"
@@ -206,6 +229,7 @@ export default [
         }
     },
     {
+        id: 24,
         tsm: "5601-7L",
         grade: {
             code: "(PP) BYE63"
@@ -215,6 +239,7 @@ export default [
         }
     },
     {
+        id: 25,
         tsm: "5601-7L",
         grade: {
             code: "(PP) BYE63"
@@ -224,6 +249,7 @@ export default [
         }
     },
     {
+        id: 26,
         tsm: "5708-1",
         grade: {
             code: "(PP) CPS-142"
@@ -233,6 +259,7 @@ export default [
         }
     },
     {
+        id: 27,
         tsm: "5515-1B",
         grade: {
             code: "POM"
@@ -242,6 +269,7 @@ export default [
         }
     },
     {
+        id: 28,
         tsm: "5528-1LN",
         grade: {
             code: "B132AT (PP2)"

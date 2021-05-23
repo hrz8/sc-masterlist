@@ -6,6 +6,7 @@ import { Material } from "./Material";
 import { MouldCav } from "./MouldCav";
 import { MouldMaker } from "./MouldMaker";
 import { MouldTon } from "./MouldTon";
+import { Process } from "./Process";
 import { Project } from "./Project";
 import { Sourcing } from "./Sourcing";
 
@@ -21,22 +22,22 @@ export class Part {
     })
     number!: string;
 
-    @Column()
+    @Column({ nullable: false })
     level!: number;
 
-    @Column()
-    name!: number;
+    @Column({ nullable: false })
+    name!: string;
 
     @Column("text")
-    image!: string;
+    image?: string;
 
-    @Column()
-    qtyPerUnit!: number;
+    @Column({ nullable: true })
+    qtyPerUnit?: number;
 
-    @Column()
-    qtyPerMonth!: number;
+    @Column({ nullable: true })
+    qtyPerMonth?: number;
 
-    @Column()
+    @Column({ nullable: true })
     dwgWeight?: number;
 
     @Column({ nullable: true })
@@ -45,7 +46,7 @@ export class Part {
     @Column({ nullable: true })
     paintCode?: string;
 
-    @Column("text")
+    @Column({ nullable: true })
     remarks?: string;
 
     // project relation
@@ -58,6 +59,24 @@ export class Part {
         name: "part_color"
     })
     colors?: Color[];
+
+    @ManyToMany(() => Sourcing)
+    @JoinTable({
+        name: "part_sourcing"
+    })
+    sourcings?: Sourcing[];
+
+    @Column({ nullable: true })
+    sourcingRemarks?: string;
+
+    @ManyToMany(() => Process)
+    @JoinTable({
+        name: "part_process"
+    })
+    processes?: Process[];
+
+    @Column({ nullable: true })
+    processRouting?: string;
 
     // many to one
     @ManyToOne(() => Material, material => material.parts)
@@ -83,6 +102,6 @@ export class Part {
     children?: Part[];
 
     @TreeParent()
-    parent!: Part;
+    parent?: Part;
 
 }
