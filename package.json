@@ -2,8 +2,10 @@
   "name": "sc-masterlist",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
+    "start": "tsc && node dist/app.js",
+    "db:sync": "tsc --build && typeorm schema:sync",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +27,8 @@
     "typeorm": "^0.2.32"
   },
   "devDependencies": {
-    "@types/node": "^15.6.0"
+    "@types/node": "^15.6.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }
