@@ -1,4 +1,3 @@
--- docker exec mysql-container /usr/bin/mysqldump -u root --password=password sc-masterlist > backup.sql
 -- MySQL dump 10.13  Distrib 8.0.25, for Linux (x86_64)
 --
 -- Host: localhost    Database: sc-masterlist
@@ -49,12 +48,12 @@ DROP TABLE IF EXISTS `color`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `color` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `code` varchar(255) NOT NULL,
   `sfx` varchar(255) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,6 +62,7 @@ CREATE TABLE `color` (
 
 LOCK TABLES `color` WRITE;
 /*!40000 ALTER TABLE `color` DISABLE KEYS */;
+INSERT INTO `color` VALUES (1,'BLACK','201B',NULL,NULL),(2,'IVORY','R080',NULL,NULL),(3,'IVORY','H0S9',NULL,NULL),(4,'BLACK','Y2W1',NULL,NULL),(5,'BLACK','R299',NULL,NULL),(6,NULL,'RS76',NULL,NULL),(7,NULL,'RT45',NULL,NULL),(8,'BLACK','11BK03',NULL,NULL),(9,'BLACK','11BK01',NULL,NULL),(10,'BLACK','12BK02',NULL,NULL),(11,'NATURAL','NATURAL',NULL,NULL),(12,'GREY','R8H',NULL,NULL),(13,'BEIGE','587',NULL,NULL),(14,'BLACK','RX04',NULL,NULL);
 /*!40000 ALTER TABLE `color` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ DROP TABLE IF EXISTS `grain_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grain_type` (
-  `code` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -86,6 +86,7 @@ CREATE TABLE `grain_type` (
 
 LOCK TABLES `grain_type` WRITE;
 /*!40000 ALTER TABLE `grain_type` DISABLE KEYS */;
+INSERT INTO `grain_type` VALUES ('GR002',NULL),('GR003',NULL),('GR004',NULL),('GR005',NULL),('GR006',NULL),('GR007',NULL),('GR008',NULL),('GR009',NULL),('GR010',NULL),('GR011',NULL),('GR012',NULL),('GR013',NULL),('GR014',NULL),('GR015',NULL),('GR016',NULL),('GR017',NULL),('GR018',NULL),('GR019',NULL),('GR020',NULL),('GR021',NULL),('GR022',NULL),('GR023',NULL),('GR024',NULL),('GR025',NULL),('GR026',NULL),('GR027',NULL),('GR028',NULL),('GR029',NULL),('GR030',NULL),('GR031',NULL),('GR032',NULL),('GR033',NULL),('GR034',NULL),('GR035',NULL),('GR036',NULL),('GR037',NULL),('GR038',NULL),('GR039',NULL),('GR040',NULL),('GR041',NULL),('GR042',NULL),('GR043',NULL),('GR044',NULL),('GR045',NULL),('GR046',NULL),('GR047',NULL),('GR048',NULL),('GR049',NULL),('GR050',NULL),('GR051',NULL),('GR052',NULL),('GR053',NULL),('GR054',NULL),('GR055',NULL),('GR056',NULL),('GR057',NULL),('GR058',NULL),('GR059',NULL),('GR060',NULL),('GR061',NULL),('GR062',NULL),('GR500',NULL),('GR501',NULL),('GR502',NULL),('GR503',NULL),('GR504',NULL),('GR505',NULL),('GR506',NULL),('GR507',NULL),('GR508',NULL),('GR509',NULL),('GR510',NULL),('GR511',NULL),('GR512',NULL),('GRAIN-A',NULL),('GRAIN-B',NULL),('GRAIN-C',NULL),('GRAIN-D',NULL),('GRAIN-E',NULL),('GRAIN-F',NULL),('GRAIN-G',NULL),('GRAIN-H',NULL),('GRAIN-I',NULL),('GRAIN-J',NULL),('GRAIN-K',NULL);
 /*!40000 ALTER TABLE `grain_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,11 +100,15 @@ DROP TABLE IF EXISTS `material`;
 CREATE TABLE `material` (
   `id` int NOT NULL AUTO_INCREMENT,
   `tsm` varchar(255) NOT NULL,
-  `grade` varchar(255) NOT NULL,
-  `maker` varchar(255) NOT NULL,
   `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `gradeCode` varchar(255) DEFAULT NULL,
+  `makerName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_e8dddd4ced7c87e40e622b2c2c3` (`gradeCode`),
+  KEY `FK_d780f85b0178af88fa685933dc6` (`makerName`),
+  CONSTRAINT `FK_d780f85b0178af88fa685933dc6` FOREIGN KEY (`makerName`) REFERENCES `material_maker` (`name`),
+  CONSTRAINT `FK_e8dddd4ced7c87e40e622b2c2c3` FOREIGN KEY (`gradeCode`) REFERENCES `material_grade` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +117,81 @@ CREATE TABLE `material` (
 
 LOCK TABLES `material` WRITE;
 /*!40000 ALTER TABLE `material` DISABLE KEYS */;
+INSERT INTO `material` VALUES (1,'5608G-1',NULL,'X660T','TPC'),(2,'5608G-5AL',NULL,'LA880T','TPC'),(3,'5608G-5A',NULL,'LA880T','TPC'),(4,'5608G-5ALS',NULL,'LA880T','TPC'),(5,'5608G-5BL',NULL,'BR5B1','TPC'),(6,'5608G-5BLS',NULL,'BR5B1','TPC'),(7,'5608G-7',NULL,'TSOP-7','TPC'),(8,'5514G-2L',NULL,'(PP) AZ564GL','TPC'),(9,'5514G-3AL',NULL,'(PP) CPS188','TPC'),(10,'5514G-3BL',NULL,'(PP) AZ864E4','TPC'),(11,'5514G-3BLS',NULL,'(PP) AZ864E4','TPC'),(12,'5512G-2A',NULL,'(ABS) 100-X01','TORAY'),(13,'5512G-2C',NULL,'(ABS) 450Y-MH5','TORAY'),(14,'5512G-3A',NULL,'(ABS) 100-X01','TORAY'),(15,'5512G-3',NULL,'(ABS) 100-MPF','TORAY'),(16,'5512G-4A',NULL,'(ABS) 325','TORAY'),(17,'5512G-4B',NULL,'(ABS) 325','TORAY'),(18,'5523G-2',NULL,'(ASA) W211','TECHNO POLYMER'),(19,'5523G-1W',NULL,'ASA',NULL),(20,'5526G-1',NULL,'PC/ABS','SABIC'),(21,'5514-2',NULL,'(PP) AW563','TPC'),(22,'5514G-2',NULL,'(PP) AW563','TPC'),(23,'5514-2B',NULL,'(PP) AW564','TPC'),(24,'5601-7L',NULL,'(PP) BYE63','TPC'),(25,'5601-7L',NULL,'(PP) BYE63','TPC'),(26,'5708-1',NULL,'(PP) CPS-142','TPC'),(27,'5515-1B',NULL,'POM','POLYPLASTICS'),(28,'5528-1LN',NULL,'B132AT (PP2)','RAPINDO');
 /*!40000 ALTER TABLE `material` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `material_grade`
+--
+
+DROP TABLE IF EXISTS `material_grade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `material_grade` (
+  `code` varchar(255) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `material_grade`
+--
+
+LOCK TABLES `material_grade` WRITE;
+/*!40000 ALTER TABLE `material_grade` DISABLE KEYS */;
+INSERT INTO `material_grade` VALUES ('(ABS) 100-MPF',NULL),('(ABS) 100-X01',NULL),('(ABS) 325',NULL),('(ABS) 450Y-MH5',NULL),('(ASA) W211',NULL),('(PP) AW563',NULL),('(PP) AW564',NULL),('(PP) AZ564GL',NULL),('(PP) AZ864E4',NULL),('(PP) BYE63',NULL),('(PP) CPS-142',NULL),('(PP) CPS188',NULL),('ASA',NULL),('B132AT (PP2)',NULL),('BR5B1',NULL),('LA880T',NULL),('PC/ABS',NULL),('POM',NULL),('TSOP-7',NULL),('X660T',NULL);
+/*!40000 ALTER TABLE `material_grade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `material_maker`
+--
+
+DROP TABLE IF EXISTS `material_maker`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `material_maker` (
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `material_maker`
+--
+
+LOCK TABLES `material_maker` WRITE;
+/*!40000 ALTER TABLE `material_maker` DISABLE KEYS */;
+INSERT INTO `material_maker` VALUES ('POLYPLASTICS',NULL),('RAPINDO',NULL),('SABIC',NULL),('TECHNO POLYMER',NULL),('TORAY',NULL),('TPC',NULL);
+/*!40000 ALTER TABLE `material_maker` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `migrations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `timestamp` bigint NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,1621751799090,'addSeed1621751799090');
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -127,7 +206,7 @@ CREATE TABLE `mould_cav` (
   `value` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,6 +215,7 @@ CREATE TABLE `mould_cav` (
 
 LOCK TABLES `mould_cav` WRITE;
 /*!40000 ALTER TABLE `mould_cav` DISABLE KEYS */;
+INSERT INTO `mould_cav` VALUES (1,'1',NULL),(2,'2',NULL),(3,'R/L SET',NULL),(4,'FAMILY MOULD',NULL);
 /*!40000 ALTER TABLE `mould_cav` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +231,7 @@ CREATE TABLE `mould_maker` (
   `name` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,6 +240,7 @@ CREATE TABLE `mould_maker` (
 
 LOCK TABLES `mould_maker` WRITE;
 /*!40000 ALTER TABLE `mould_maker` DISABLE KEYS */;
+INSERT INTO `mould_maker` VALUES (1,'TATEMATSU',NULL),(2,'YAMAGUCHI',NULL),(3,'KOZUKA',NULL),(4,'SUGITY',NULL),(5,'RPT',NULL),(6,'JS MOLD',NULL),(7,'SAEAM',NULL),(8,'NARA',NULL),(9,'HYUKJIN',NULL),(10,'NAN JOMG',NULL),(11,'SMT',NULL),(12,'JPQ',NULL);
 /*!40000 ALTER TABLE `mould_maker` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,10 +253,10 @@ DROP TABLE IF EXISTS `mould_ton`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mould_ton` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `value` varchar(255) NOT NULL,
+  `value` int NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,6 +265,7 @@ CREATE TABLE `mould_ton` (
 
 LOCK TABLES `mould_ton` WRITE;
 /*!40000 ALTER TABLE `mould_ton` DISABLE KEYS */;
+INSERT INTO `mould_ton` VALUES (1,80,NULL),(2,170,NULL),(3,350,NULL),(4,650,NULL),(5,1300,NULL),(6,1600,NULL),(7,2500,NULL),(8,3500,NULL);
 /*!40000 ALTER TABLE `mould_ton` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,9 +284,12 @@ CREATE TABLE `part` (
   `qtyPerUnit` int NOT NULL,
   `qtyPerMonth` int NOT NULL,
   `dwgWeight` int NOT NULL,
+  `paintColor` varchar(255) DEFAULT NULL,
+  `paintCode` varchar(255) DEFAULT NULL,
+  `remarks` text NOT NULL,
   `projectId` int DEFAULT NULL,
   `materialId` int DEFAULT NULL,
-  `grainTypeCode` int DEFAULT NULL,
+  `grainTypeCode` varchar(255) DEFAULT NULL,
   `mouldMakerId` int DEFAULT NULL,
   `mouldTonId` int DEFAULT NULL,
   `mouldCavId` int DEFAULT NULL,
@@ -328,13 +413,13 @@ DROP TABLE IF EXISTS `part_sourcing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `part_sourcing` (
-  `partNumber` varchar(100) NOT NULL,
+  `partNumber` varchar(255) NOT NULL,
   `sourcingId` int NOT NULL,
+  `remarks` varchar(255) NOT NULL,
   PRIMARY KEY (`partNumber`,`sourcingId`),
-  KEY `IDX_97a30e04c91c612bd1bf2163af` (`partNumber`),
-  KEY `IDX_00148a090b5c04ee2773936bcd` (`sourcingId`),
-  CONSTRAINT `FK_00148a090b5c04ee2773936bcd3` FOREIGN KEY (`sourcingId`) REFERENCES `sourcing` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_97a30e04c91c612bd1bf2163af0` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`) ON DELETE CASCADE
+  KEY `FK_00148a090b5c04ee2773936bcd3` (`sourcingId`),
+  CONSTRAINT `FK_00148a090b5c04ee2773936bcd3` FOREIGN KEY (`sourcingId`) REFERENCES `sourcing` (`id`),
+  CONSTRAINT `FK_97a30e04c91c612bd1bf2163af0` FOREIGN KEY (`partNumber`) REFERENCES `part` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -359,7 +444,7 @@ CREATE TABLE `process` (
   `name` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,6 +453,7 @@ CREATE TABLE `process` (
 
 LOCK TABLES `process` WRITE;
 /*!40000 ALTER TABLE `process` DISABLE KEYS */;
+INSERT INTO `process` VALUES (1,'RESIN',NULL),(2,'PLATING',NULL),(3,'PAINT',NULL),(4,'EXTRUSION',NULL),(5,'CUTTING',NULL),(6,'GRAIN',NULL),(7,'ASSY',NULL);
 /*!40000 ALTER TABLE `process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,7 +469,7 @@ CREATE TABLE `project` (
   `name` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -392,6 +478,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` VALUES (1,'D26A',NULL),(2,'560B',NULL);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +494,7 @@ CREATE TABLE `sourcing` (
   `name` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,6 +503,7 @@ CREATE TABLE `sourcing` (
 
 LOCK TABLES `sourcing` WRITE;
 /*!40000 ALTER TABLE `sourcing` DISABLE KEYS */;
+INSERT INTO `sourcing` VALUES (1,'SUGITY',NULL),(2,'RPT',NULL),(3,'TTEC',NULL),(4,'KTI',NULL),(5,'OTHERS',NULL),(6,'CKD',NULL),(7,'V-V',NULL);
 /*!40000 ALTER TABLE `sourcing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -428,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-23  6:24:17
+-- Dump completed on 2021-05-23  8:03:41
