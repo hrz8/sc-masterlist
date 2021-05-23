@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, Tree, TreeChildren, TreeParent, ManyToMany, JoinTable } from "typeorm";
+import { ActualWeight } from "./ActualWeight";
 import { Color } from "./Color";
 import { GrainType } from "./GrainType";
 import { Material } from "./Material";
@@ -70,6 +71,9 @@ export class Part {
     
     @ManyToOne(() => MouldCav, mouldCav => mouldCav.parts)
     mouldCav?: MouldCav;
+
+    @ManyToOne(() => ActualWeight, actualWeight => actualWeight.parts)
+    actualWeight?: ActualWeight;
 
     // Closure
     @TreeChildren()
