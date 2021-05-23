@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/hrz8/sc-masterlist/issues"
   },
-  "homepage": "https://github.com/hrz8/sc-masterlist#readme"
+  "homepage": "https://github.com/hrz8/sc-masterlist#readme",
+  "dependencies": {
+    "typeorm": "^0.2.32"
+  }
 }
